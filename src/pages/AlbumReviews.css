@@ -1,0 +1,162 @@
+/* Album Reviews Page */
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.review-card {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  min-height: 300px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.review-card:hover {
+  border-color: var(--border-light);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.review-card.featured {
+  min-height: 380px;
+}
+
+.review-cover {
+  position: relative;
+  overflow: hidden;
+}
+
+.review-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.review-card:hover .review-cover img {
+  transform: scale(1.05);
+}
+
+.review-rating {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-md);
+}
+
+.review-rating .rating-star {
+  color: var(--accent-secondary);
+  font-size: 1rem;
+}
+
+.review-rating .rating-score {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent-secondary);
+}
+
+.review-content {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.review-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.review-label {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: var(--accent-tertiary);
+  color: #fff;
+  border-radius: 100px;
+  text-transform: uppercase;
+}
+
+.review-date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.review-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.5rem;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+.review-card.featured .review-title {
+  font-size: 1.75rem;
+}
+
+.review-excerpt {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.review-author {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.author-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.author-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.read-more {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--accent-primary);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .review-card {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .review-cover {
+    height: 220px;
+  }
+
+  .review-content {
+    padding: 1.5rem;
+  }
+
+  .review-title {
+    font-size: 1.25rem;
+  }
+
+  .review-card.featured .review-title {
+    font-size: 1.25rem;
+  }
+}
+

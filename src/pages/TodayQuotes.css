@@ -1,0 +1,128 @@
+/* Today Quotes Page */
+
+.quotes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.quote-item {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  transition: all 0.3s ease;
+}
+
+.quote-item:hover {
+  border-color: var(--border-light);
+  box-shadow: var(--shadow-md);
+}
+
+.quote-item.featured {
+  background: linear-gradient(135deg, var(--bg-card), rgba(255, 107, 53, 0.05));
+  border-color: rgba(255, 107, 53, 0.3);
+}
+
+.quote-album-art {
+  flex-shrink: 0;
+}
+
+.quote-album-art img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.quote-item.featured .quote-album-art img {
+  width: 160px;
+  height: 160px;
+}
+
+.quote-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.quote-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.quote-text {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.quote-item.featured .quote-text {
+  font-size: 2rem;
+}
+
+.quote-source {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.quote-song {
+  color: var(--accent-primary);
+  font-weight: 500;
+}
+
+.quote-divider {
+  color: var(--text-muted);
+}
+
+.quote-artist {
+  color: var(--text-secondary);
+}
+
+.quote-commentary {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  padding: 1rem;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  margin-top: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .quote-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .quote-text {
+    font-size: 1.25rem;
+  }
+
+  .quote-item.featured .quote-text {
+    font-size: 1.5rem;
+  }
+
+  .quote-source {
+    justify-content: center;
+  }
+
+  .quote-item.featured .quote-album-art img {
+    width: 140px;
+    height: 140px;
+  }
+}
+

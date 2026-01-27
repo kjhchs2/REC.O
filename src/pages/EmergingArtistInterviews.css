@@ -1,0 +1,201 @@
+/* Emerging Artist Interviews Page */
+
+.emerging-intro {
+  margin-bottom: 3rem;
+}
+
+.intro-card {
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(247, 201, 75, 0.1));
+  border: 1px solid rgba(255, 107, 53, 0.2);
+  border-radius: var(--radius-xl);
+  text-align: center;
+}
+
+.intro-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.intro-card h2 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.intro-card p {
+  max-width: 600px;
+  margin: 0 auto;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.emerging-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.emerging-card {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  min-height: 320px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.emerging-card:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(255, 107, 53, 0.15);
+}
+
+.emerging-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.emerging-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.emerging-card:hover .emerging-image img {
+  transform: scale(1.05);
+}
+
+.emerging-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent 60%, var(--bg-card) 100%);
+}
+
+.follower-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--accent-secondary);
+}
+
+.follower-number {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--accent-secondary);
+}
+
+.follower-text {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.emerging-content {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.emerging-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.emerging-category {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--accent-secondary);
+  color: var(--bg-primary);
+  border-radius: 100px;
+}
+
+.emerging-date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.emerging-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 0.75rem;
+}
+
+.emerging-excerpt {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.emerging-artist {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.emerging-artist img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent-secondary);
+}
+
+.emerging-artist-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.emerging-artist-name {
+  font-weight: 600;
+}
+
+.emerging-artist-label {
+  font-size: 0.75rem;
+  color: var(--accent-secondary);
+}
+
+.emerging-cta {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--accent-primary);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .emerging-card {
+    grid-template-columns: 1fr;
+  }
+
+  .emerging-image {
+    height: 220px;
+  }
+
+  .emerging-overlay {
+    background: linear-gradient(to top, var(--bg-card) 0%, transparent 100%);
+  }
+
+  .emerging-content {
+    padding: 1.5rem;
+  }
+}
+
