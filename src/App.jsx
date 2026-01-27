@@ -7,6 +7,7 @@ import ArtistInterviewDetail from './pages/ArtistInterviewDetail';
 import EmergingArtistInterviews from './pages/EmergingArtistInterviews';
 import EmergingArtistInterviewDetail from './pages/EmergingArtistInterviewDetail';
 import AlbumRecommendations from './pages/AlbumRecommendations';
+import AlbumRecommendationDetail from './pages/AlbumRecommendationDetail';
 import AlbumReviews from './pages/AlbumReviews';
 import AlbumReviewDetail from './pages/AlbumReviewDetail';
 import TodayQuotes from './pages/TodayQuotes';
@@ -30,6 +31,7 @@ function App() {
           <Route path="interview/emerging/:id" element={<EmergingArtistInterviewDetail />} />
           {/* 음반 */}
           <Route path="albums/recommendations" element={<AlbumRecommendations />} />
+          <Route path="albums/recommendations/:id" element={<AlbumRecommendationDetail />} />
           <Route path="albums/reviews" element={<AlbumReviews />} />
           <Route path="albums/reviews/:id" element={<AlbumReviewDetail />} />
           <Route path="albums/quotes" element={<TodayQuotes />} />

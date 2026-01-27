@@ -53,7 +53,7 @@
   font-size: 0.7rem;
   font-weight: 600;
   background: var(--accent-primary);
-  color: var(--bg-primary);
+  color: #fff;
   border-radius: 100px;
 }
 
@@ -78,7 +78,21 @@
 .rating-score {
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--accent-secondary);
+  color: #fff;
+}
+
+.view-detail {
+  display: inline-block;
+  margin-top: auto;
+  padding-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--accent-primary);
+  transition: transform 0.2s;
+}
+
+.album-card:hover .view-detail {
+  transform: translateX(4px);
 }
 
 .album-info {

@@ -52,8 +52,7 @@ function Layout() {
       <header className="header">
         <div className="header-content">
           <Link to="/" className="logo" onClick={closeMenu}>
-            <span className="logo-main">내맘추</span>
-            <span className="logo-sub">내 마음대로 추천</span>
+            <img src="/logo.svg" alt="REC.O WEEKLY" className="logo-image" />
           </Link>
 
           <nav className={`nav ${mobileMenuOpen ? 'nav-open' : ''}`}>
@@ -108,7 +107,7 @@ function Layout() {
       <footer className="footer">
         <div className="footer-content">
           <div className="footer-brand">
-            <span className="footer-logo">내맘추</span>
+            <img src="/logo.svg" alt="REC.O WEEKLY" className="footer-logo-image" />
             <p className="footer-tagline">내 마음대로 추천하는 인디음악 매거진</p>
           </div>
           <div className="footer-links">

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { albumRecommendations } from '../data/mockData';
 import './AlbumRecommendations.css';
 
@@ -13,7 +14,8 @@ function AlbumRecommendations() {
 
       <div className="album-grid">
         {albumRecommendations.map((album, index) => (
-          <article 
+          <Link 
+            to={`/albums/recommendations/${album.id}`}
             key={album.id} 
             className={`album-card ${index === 0 ? 'featured' : ''}`}
           >
@@ -34,20 +36,9 @@ function AlbumRecommendations() {
               <h2 className="album-title">{album.title}</h2>
               <p className="album-artist">{album.artist}</p>
               <p className="album-description">{album.description}</p>
-              <div className="album-tracklist">
-                <h4>수록곡</h4>
-                <ol>
-                  {album.trackList.map((track, trackIndex) => (
-                    <li key={trackIndex}>{track}</li>
-                  ))}
-                </ol>
-              </div>
-              <p className="album-review">{album.review}</p>
-              <div className="album-meta">
-                <span className="release-date">발매일: {album.releaseDate}</span>
-              </div>
+              <span className="view-detail">자세히 보기 →</span>
             </div>
-          </article>
+          </Link>
         ))}
       </div>
     </div>

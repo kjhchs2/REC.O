@@ -6,7 +6,7 @@ function AlbumReviews() {
   return (
     <div className="album-reviews page-container">
       <header className="page-header">
-        <h1 className="page-title">음반 소개</h1>
+        <h1 className="page-title">음반 소개를 소개합니다.</h1>
         <p className="page-subtitle">
           앨범에 대한 깊이 있는 리뷰와 분석을 읽어보세요
         </p>
