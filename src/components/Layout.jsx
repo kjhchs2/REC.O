@@ -15,7 +15,7 @@ const menuItems = [
     title: '내맘추 추천 음반',
     items: [
       { name: '음반 추천', path: '/albums/recommendations' },
-      { name: '음반 소개', path: '/albums/reviews' },
+      { name: '음반 소개를 소개합니다.', path: '/albums/reviews' },
       { name: '오늘, 이 문장', path: '/albums/quotes' },
     ],
   },

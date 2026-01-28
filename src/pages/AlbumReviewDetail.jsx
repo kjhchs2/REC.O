@@ -25,7 +25,7 @@ function AlbumReviewDetail() {
         <div className="review-hero-overlay" />
         <div className="review-hero-content">
           <div className="breadcrumb">
-            <Link to="/albums/reviews">음반 소개</Link>
+            <Link to="/albums/reviews">음반 소개를 소개합니다.</Link>
             <span>/</span>
             <span>리뷰</span>
           </div>

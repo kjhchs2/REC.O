@@ -276,7 +276,7 @@ export const albumRecommendations = [
   }
 ];
 
-// 음반 소개 (상세 리뷰)
+// 음반 소개를 소개합니다.(상세 리뷰)
 export const albumReviews = [
   {
     id: 1,
