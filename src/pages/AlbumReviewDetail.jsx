@@ -1,16 +1,46 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
-import { albumReviews, albumRecommendations } from '../data/mockData';
+import { dataService } from '../lib/dataService';
 import './AlbumReviewDetail.css';
 
 function AlbumReviewDetail() {
   const { id } = useParams();
   const location = useLocation();
-  const review = albumReviews.find(item => item.id === parseInt(id));
+  const [review, setReview] = useState(null);
+  const [editor, setEditor] = useState(null);
+  const [otherReviews, setOtherReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    const fetchData = async () => {
+      try {
+        const data = await dataService.getAlbumReview(id);
+        setReview(data);
+        
+        if (data?.editorId) {
+          const editorData = await dataService.getEditor(data.editorId);
+          setEditor(editorData);
+        }
+        
+        const allReviews = await dataService.getAlbumReviews();
+        setOtherReviews(allReviews.filter(item => item.id !== data?.id).slice(0, 2));
+      } catch (error) {
+        console.error('Error fetching review:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
   }, [id, location.pathname]);
+
+  if (loading) {
+    return (
+      <div className="album-review-detail page-container">
+        <div style={{ textAlign: 'center', padding: '60px' }}>로딩 중...</div>
+      </div>
+    );
+  }
 
   if (!review) {
     return (
@@ -20,8 +50,6 @@ function AlbumReviewDetail() {
       </div>
     );
   }
-
-  const album = albumRecommendations.find(a => a.id === review.albumId);
 
   return (
     <div className="album-review-detail page-container">
@@ -50,46 +78,37 @@ function AlbumReviewDetail() {
 
       {/* Content */}
       <article className="review-article">
-        {album && (
-          <div className="album-info-card">
-            <img src={album.cover} alt={album.title} className="album-info-cover" />
-            <div className="album-info-details">
-              <h3>{album.title}</h3>
-              <p className="album-info-artist">{album.artist}</p>
-              <p className="album-info-meta">{album.genre} · {album.releaseDate}</p>
-              <div className="album-info-tracks">
-                {album.trackList.map((track, index) => (
-                  <span key={index}>{track}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
         <div className="review-body">
-          {review.content.split('\n\n').map((paragraph, index) => (
+          {(review.content || '').split('\n\n').map((paragraph, index) => (
             <p key={index}>{paragraph.trim()}</p>
           ))}
         </div>
 
         <div className="review-footer">
-          <div className="reviewer-card">
-            <div className="reviewer-info">
-              <span className="reviewer-label">리뷰어</span>
-              <h4>{review.author}</h4>
-            </div>
-          </div>
+          {editor && (
+            <Link to={`/editor/${editor.id}`} className="editor-card">
+              <div className="editor-card-avatar">
+                {editor.profileImage ? (
+                  <img src={editor.profileImage} alt={editor.displayName} />
+                ) : (
+                  <span>{editor.name?.charAt(0)}</span>
+                )}
+              </div>
+              <div className="editor-card-info">
+                <span className="editor-card-label">작성자</span>
+                <span className="editor-card-name">{editor.displayName}</span>
+              </div>
+            </Link>
+          )}
         </div>
       </article>
 
       {/* More Reviews */}
+      {otherReviews.length > 0 && (
       <section className="more-section">
         <h2 className="section-title">다른 리뷰</h2>
         <div className="more-grid">
-          {albumReviews
-            .filter(item => item.id !== review.id)
-            .slice(0, 2)
-            .map(item => (
+          {otherReviews.map(item => (
               <Link 
                 to={`/albums/reviews/${item.id}`} 
                 key={item.id}
@@ -105,9 +124,9 @@ function AlbumReviewDetail() {
             ))}
         </div>
       </section>
+      )}
     </div>
   );
 }
 
 export default AlbumReviewDetail;
-

@@ -1,17 +1,46 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
-import { weeklyNewReleases, festivalNews } from '../data/mockData';
+import { dataService } from '../lib/dataService';
 import './NewsDetail.css';
 
 function NewsDetail() {
   const { id } = useParams();
   const location = useLocation();
-  const allNews = [...weeklyNewReleases, ...festivalNews];
-  const news = allNews.find(item => item.id === parseInt(id));
+  const [news, setNews] = useState(null);
+  const [editor, setEditor] = useState(null);
+  const [otherNews, setOtherNews] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    const fetchData = async () => {
+      try {
+        const data = await dataService.getNews(id);
+        setNews(data);
+        
+        if (data?.editorId) {
+          const editorData = await dataService.getEditor(data.editorId);
+          setEditor(editorData);
+        }
+        
+        const allNews = await dataService.getAllNews();
+        setOtherNews(allNews.filter(item => item.id !== data?.id).slice(0, 3));
+      } catch (error) {
+        console.error('Error fetching news:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
   }, [id, location.pathname]);
+
+  if (loading) {
+    return (
+      <div className="news-detail page-container">
+        <div style={{ textAlign: 'center', padding: '60px' }}>로딩 중...</div>
+      </div>
+    );
+  }
 
   if (!news) {
     return (
@@ -35,7 +64,7 @@ function NewsDetail() {
             <span>{news.genre || '뉴스'}</span>
           </div>
           <div className="news-tags-row">
-            {news.tags?.map((tag, index) => (
+            {(news.tags || []).map((tag, index) => (
               <span key={index} className="news-tag">{tag}</span>
             ))}
           </div>
@@ -74,24 +103,37 @@ function NewsDetail() {
         )}
 
         <div className="news-body">
-          {news.content.split('\n\n').map((paragraph, index) => (
+          {(news.content || '').split('\n\n').map((paragraph, index) => (
             <p key={index}>{paragraph.trim()}</p>
           ))}
         </div>
 
         <div className="news-footer">
+          {editor && (
+            <Link to={`/editor/${editor.id}`} className="editor-card">
+              <div className="editor-card-avatar">
+                {editor.profileImage ? (
+                  <img src={editor.profileImage} alt={editor.displayName} />
+                ) : (
+                  <span>{editor.name?.charAt(0)}</span>
+                )}
+              </div>
+              <div className="editor-card-info">
+                <span className="editor-card-label">작성자</span>
+                <span className="editor-card-name">{editor.displayName}</span>
+              </div>
+            </Link>
+          )}
           <Link to="/news/weekly" className="back-link">← 목록으로 돌아가기</Link>
         </div>
       </article>
 
       {/* Related News */}
+      {otherNews.length > 0 && (
       <section className="related-section">
         <h2 className="section-title">다른 소식</h2>
         <div className="related-grid">
-          {allNews
-            .filter(item => item.id !== news.id)
-            .slice(0, 3)
-            .map(item => (
+          {otherNews.map(item => (
               <Link 
                 to={`/news/${item.id}`} 
                 key={item.id}
@@ -107,9 +149,9 @@ function NewsDetail() {
             ))}
         </div>
       </section>
+      )}
     </div>
   );
 }
 
 export default NewsDetail;
-

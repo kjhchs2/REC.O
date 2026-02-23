@@ -1,16 +1,46 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
-import { artistInterviews } from '../data/mockData';
+import { dataService } from '../lib/dataService';
 import './InterviewDetail.css';
 
 function ArtistInterviewDetail() {
   const { id } = useParams();
   const location = useLocation();
-  const interview = artistInterviews.find(item => item.id === parseInt(id));
+  const [interview, setInterview] = useState(null);
+  const [editor, setEditor] = useState(null);
+  const [otherInterviews, setOtherInterviews] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    const fetchData = async () => {
+      try {
+        const data = await dataService.getArtistInterview(id);
+        setInterview(data);
+        
+        if (data?.editorId) {
+          const editorData = await dataService.getEditor(data.editorId);
+          setEditor(editorData);
+        }
+        
+        const allInterviews = await dataService.getArtistInterviews();
+        setOtherInterviews(allInterviews.filter(item => item.id !== data?.id).slice(0, 2));
+      } catch (error) {
+        console.error('Error fetching interview:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
   }, [id, location.pathname]);
+
+  if (loading) {
+    return (
+      <div className="interview-detail page-container">
+        <div style={{ textAlign: 'center', padding: '60px' }}>로딩 중...</div>
+      </div>
+    );
+  }
 
   if (!interview) {
     return (
@@ -75,17 +105,31 @@ function ArtistInterviewDetail() {
               <span className="artist-card-category">{interview.category}</span>
             </div>
           </div>
+          
+          {editor && (
+            <Link to={`/editor/${editor.id}`} className="editor-card">
+              <div className="editor-card-avatar">
+                {editor.profileImage ? (
+                  <img src={editor.profileImage} alt={editor.displayName} />
+                ) : (
+                  <span>{editor.name?.charAt(0)}</span>
+                )}
+              </div>
+              <div className="editor-card-info">
+                <span className="editor-card-label">작성자</span>
+                <span className="editor-card-name">{editor.displayName}</span>
+              </div>
+            </Link>
+          )}
         </div>
       </article>
 
       {/* More Interviews */}
+      {otherInterviews.length > 0 && (
       <section className="more-section">
         <h2 className="section-title">다른 인터뷰</h2>
         <div className="more-grid">
-          {artistInterviews
-            .filter(item => item.id !== interview.id)
-            .slice(0, 2)
-            .map(item => (
+          {otherInterviews.map(item => (
               <Link 
                 to={`/interview/artist/${item.id}`} 
                 key={item.id}
@@ -101,6 +145,7 @@ function ArtistInterviewDetail() {
             ))}
         </div>
       </section>
+      )}
     </div>
   );
 }

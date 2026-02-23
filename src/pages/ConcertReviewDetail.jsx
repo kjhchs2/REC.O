@@ -1,16 +1,46 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
-import { concertReviews } from '../data/mockData';
+import { dataService } from '../lib/dataService';
 import './ConcertReviewDetail.css';
 
 function ConcertReviewDetail() {
   const { id } = useParams();
   const location = useLocation();
-  const review = concertReviews.find(item => item.id === parseInt(id));
+  const [review, setReview] = useState(null);
+  const [editor, setEditor] = useState(null);
+  const [otherReviews, setOtherReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    const fetchData = async () => {
+      try {
+        const data = await dataService.getConcertReview(id);
+        setReview(data);
+        
+        if (data?.editorId) {
+          const editorData = await dataService.getEditor(data.editorId);
+          setEditor(editorData);
+        }
+        
+        const allReviews = await dataService.getConcertReviews();
+        setOtherReviews(allReviews.filter(item => item.id !== data?.id).slice(0, 2));
+      } catch (error) {
+        console.error('Error fetching review:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
   }, [id, location.pathname]);
+
+  if (loading) {
+    return (
+      <div className="concert-detail page-container">
+        <div style={{ textAlign: 'center', padding: '60px' }}>로딩 중...</div>
+      </div>
+    );
+  }
 
   if (!review) {
     return (
@@ -53,16 +83,25 @@ function ConcertReviewDetail() {
 
       {/* Content */}
       <article className="concert-article">
-        {/* Author */}
-        <div className="author-card">
-          <img src={review.authorImage} alt={review.author} className="author-avatar" />
-          <div className="author-info">
-            <span className="author-label">작성자</span>
-            <span className="author-name">{review.author}</span>
-          </div>
-        </div>
+        {/* Editor */}
+        {editor && (
+          <Link to={`/editor/${editor.id}`} className="author-card">
+            <div className="author-avatar-wrapper">
+              {editor.profileImage ? (
+                <img src={editor.profileImage} alt={editor.displayName} className="author-avatar" />
+              ) : (
+                <div className="author-avatar-placeholder">{editor.name?.charAt(0)}</div>
+              )}
+            </div>
+            <div className="author-info">
+              <span className="author-label">작성자</span>
+              <span className="author-name">{editor.displayName}</span>
+            </div>
+          </Link>
+        )}
 
         {/* Setlist */}
+        {(review.setlist || []).length > 0 && (
         <div className="setlist-section">
           <h3>세트리스트</h3>
           <ol className="setlist">
@@ -71,10 +110,11 @@ function ConcertReviewDetail() {
             ))}
           </ol>
         </div>
+        )}
 
         {/* Review Body */}
         <div className="concert-body">
-          {review.content.split('\n\n').map((paragraph, index) => (
+          {(review.content || '').split('\n\n').map((paragraph, index) => (
             <p key={index}>{paragraph.trim()}</p>
           ))}
         </div>
@@ -99,13 +139,11 @@ function ConcertReviewDetail() {
       </article>
 
       {/* Related Reviews */}
+      {otherReviews.length > 0 && (
       <section className="related-section">
         <h2 className="section-title">다른 공연 후기</h2>
         <div className="related-grid">
-          {concertReviews
-            .filter(item => item.id !== review.id)
-            .slice(0, 2)
-            .map(item => (
+          {otherReviews.map(item => (
               <Link 
                 to={`/reviews/concert/${item.id}`} 
                 key={item.id}
@@ -121,9 +159,9 @@ function ConcertReviewDetail() {
             ))}
         </div>
       </section>
+      )}
     </div>
   );
 }
 
 export default ConcertReviewDetail;
-

@@ -306,6 +306,50 @@
   color: var(--text-muted);
 }
 
+/* Author Card with Link */
+.author-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  margin-bottom: 2rem;
+}
+
+.author-card:hover {
+  background: var(--bg-card);
+  transform: translateX(4px);
+}
+
+.author-avatar-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.author-avatar-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.author-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--accent-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
 /* Not Found */
 .not-found {
   text-align: center;

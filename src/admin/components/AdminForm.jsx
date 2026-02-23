@@ -48,15 +48,18 @@ function AdminForm({
 
   const extractYoutubeId = (input) => {
     if (!input) return '';
+    const trimmed = input.trim();
     const patterns = [
-      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+      // https://youtu.be/hqDfl6D_yX0, http://youtu.be/xxx, youtu.be/xxx (쿼리스트링 포함)
+      /(?:youtu\.be\/|youtube\.com\/watch\?v=|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+      // 11자리 ID만 입력한 경우
       /^([a-zA-Z0-9_-]{11})$/
     ];
     for (const pattern of patterns) {
-      const match = input.match(pattern);
+      const match = trimmed.match(pattern);
       if (match) return match[1];
     }
-    return input;
+    return trimmed;
   };
 
   const handleYoutubeChange = (name, value) => {

@@ -1,16 +1,46 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
-import { emergingArtistInterviews } from '../data/mockData';
+import { dataService } from '../lib/dataService';
 import './InterviewDetail.css';
 
 function EmergingArtistInterviewDetail() {
   const { id } = useParams();
   const location = useLocation();
-  const interview = emergingArtistInterviews.find(item => item.id === parseInt(id));
+  const [interview, setInterview] = useState(null);
+  const [editor, setEditor] = useState(null);
+  const [otherInterviews, setOtherInterviews] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    const fetchData = async () => {
+      try {
+        const data = await dataService.getEmergingArtistInterview(id);
+        setInterview(data);
+        
+        if (data?.editorId) {
+          const editorData = await dataService.getEditor(data.editorId);
+          setEditor(editorData);
+        }
+        
+        const allInterviews = await dataService.getEmergingArtistInterviews();
+        setOtherInterviews(allInterviews.filter(item => item.id !== data?.id).slice(0, 2));
+      } catch (error) {
+        console.error('Error fetching interview:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
   }, [id, location.pathname]);
+
+  if (loading) {
+    return (
+      <div className="interview-detail page-container">
+        <div style={{ textAlign: 'center', padding: '60px' }}>로딩 중...</div>
+      </div>
+    );
+  }
 
   if (!interview) {
     return (
@@ -34,7 +64,7 @@ function EmergingArtistInterviewDetail() {
             <span>{interview.artist}</span>
           </div>
           <div className="emerging-badge">
-            <span className="follower-count">{interview.followers.toLocaleString()}</span>
+            <span className="follower-count">{(interview.followers || 0).toLocaleString()}</span>
             <span className="follower-label">팔로워</span>
           </div>
           <span className="interview-badge">{interview.category}</span>
@@ -56,7 +86,7 @@ function EmergingArtistInterviewDetail() {
         </div>
 
         <div className="qa-section">
-          {interview.questions.map((qa, index) => (
+          {(interview.questions || []).map((qa, index) => (
             <div key={index} className="qa-item">
               <div className="question">
                 <span className="q-label">Q</span>
@@ -76,20 +106,34 @@ function EmergingArtistInterviewDetail() {
             <div className="artist-card-info">
               <span className="artist-card-label">신예 아티스트</span>
               <h3>{interview.artist}</h3>
-              <span className="artist-card-category">{interview.category} · {interview.followers.toLocaleString()} 팔로워</span>
+              <span className="artist-card-category">{interview.category} · {(interview.followers || 0).toLocaleString()} 팔로워</span>
             </div>
           </div>
+          
+          {editor && (
+            <Link to={`/editor/${editor.id}`} className="editor-card">
+              <div className="editor-card-avatar">
+                {editor.profileImage ? (
+                  <img src={editor.profileImage} alt={editor.displayName} />
+                ) : (
+                  <span>{editor.name?.charAt(0)}</span>
+                )}
+              </div>
+              <div className="editor-card-info">
+                <span className="editor-card-label">작성자</span>
+                <span className="editor-card-name">{editor.displayName}</span>
+              </div>
+            </Link>
+          )}
         </div>
       </article>
 
       {/* More Interviews */}
+      {otherInterviews.length > 0 && (
       <section className="more-section">
         <h2 className="section-title">다른 저점 매수 아티스트</h2>
         <div className="more-grid">
-          {emergingArtistInterviews
-            .filter(item => item.id !== interview.id)
-            .slice(0, 2)
-            .map(item => (
+          {otherInterviews.map(item => (
               <Link 
                 to={`/interview/emerging/${item.id}`} 
                 key={item.id}
@@ -105,9 +149,9 @@ function EmergingArtistInterviewDetail() {
             ))}
         </div>
       </section>
+      )}
     </div>
   );
 }
 
 export default EmergingArtistInterviewDetail;
-

@@ -287,6 +287,14 @@ export const dataService = {
     return transformFromSupabase.weeklyNews(data);
   },
 
+  async getNews(id) {
+    return this.getNewsItem(id);
+  },
+
+  async getAllNews() {
+    return this.getWeeklyNews();
+  },
+
   async getConcertReviews() {
     if (USE_MOCK) return mockData.concertReviews;
     
