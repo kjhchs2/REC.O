@@ -1,10 +1,16 @@
-import { useParams, Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { albumRecommendations } from '../data/mockData';
 import './AlbumRecommendationDetail.css';
 
 function AlbumRecommendationDetail() {
   const { id } = useParams();
+  const location = useLocation();
   const album = albumRecommendations.find(a => a.id === parseInt(id));
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id, location.pathname]);
 
   if (!album) {
     return (

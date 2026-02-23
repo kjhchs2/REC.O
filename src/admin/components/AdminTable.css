@@ -1,0 +1,173 @@
+/* Admin Table Styles */
+
+.admin-table-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.admin-table-loading {
+  padding: 3rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.admin-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.admin-table-header h1 {
+  font-size: 1.25rem;
+  font-family: 'Noto Serif KR', serif;
+}
+
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.admin-btn-primary {
+  background: var(--accent-primary);
+  color: white;
+}
+
+.admin-btn-primary:hover {
+  background: var(--accent-secondary);
+}
+
+.admin-btn-secondary {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.admin-btn-secondary:hover {
+  background: var(--bg-card);
+  border-color: var(--border-light);
+}
+
+.admin-table-empty {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.admin-table-empty p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.admin-table-wrapper {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 1rem 1.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.admin-table th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  background: var(--bg-tertiary);
+}
+
+.admin-table td {
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+
+.admin-table tbody tr:hover {
+  background: var(--bg-tertiary);
+}
+
+.admin-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.admin-table-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.admin-table-btn:hover {
+  background: var(--bg-card);
+}
+
+.admin-table-btn.edit:hover {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+.admin-table-btn.delete:hover {
+  color: #ef4444;
+  border-color: #ef4444;
+}
+
+/* Table Cell Renderers */
+.table-image {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.table-badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 4px;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.table-badge.active {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.table-truncate {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

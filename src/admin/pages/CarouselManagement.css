@@ -1,0 +1,240 @@
+/* Carousel Management Styles */
+
+.carousel-management {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.carousel-management .page-header {
+  margin-bottom: 2rem;
+}
+
+.carousel-management .page-header h1 {
+  font-size: 1.5rem;
+  font-family: 'Noto Serif KR', serif;
+  margin-bottom: 0.5rem;
+}
+
+.carousel-management .page-header p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.carousel-management .loading {
+  text-align: center;
+  padding: 4rem;
+  color: var(--text-muted);
+}
+
+.carousel-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Carousel Preview */
+.carousel-preview {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.carousel-preview h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+}
+
+.empty-message {
+  padding: 3rem 2rem;
+  text-align: center;
+  color: var(--text-muted);
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+}
+
+.carousel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.carousel-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.875rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.item-order {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-primary);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.item-image {
+  width: 60px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.item-info h4 {
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0.25rem;
+}
+
+.item-info p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.item-actions {
+  display: flex;
+  gap: 0.375rem;
+  flex-shrink: 0;
+}
+
+.action-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.action-btn:hover:not(:disabled) {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.action-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.action-btn.delete:hover {
+  color: #ef4444;
+  border-color: #ef4444;
+}
+
+/* Carousel Selector */
+.carousel-selector {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  height: fit-content;
+}
+
+.carousel-selector h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+}
+
+.selector-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.selector-form select {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.selector-form select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.add-btn {
+  padding: 0.75rem 1rem;
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-btn:hover:not(:disabled) {
+  background: var(--accent-secondary);
+}
+
+.add-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.limit-message {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+/* Info Notice */
+.info-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.info-notice svg {
+  flex-shrink: 0;
+  color: var(--accent-primary);
+}
+
+.info-notice p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .carousel-content {
+    grid-template-columns: 1fr;
+  }
+}

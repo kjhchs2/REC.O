@@ -1,10 +1,16 @@
-import { useParams, Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { artistInterviews } from '../data/mockData';
 import './InterviewDetail.css';
 
 function ArtistInterviewDetail() {
   const { id } = useParams();
+  const location = useLocation();
   const interview = artistInterviews.find(item => item.id === parseInt(id));
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id, location.pathname]);
 
   if (!interview) {
     return (

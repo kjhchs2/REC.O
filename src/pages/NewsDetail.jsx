@@ -1,11 +1,17 @@
-import { useParams, Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { weeklyNewReleases, festivalNews } from '../data/mockData';
 import './NewsDetail.css';
 
 function NewsDetail() {
   const { id } = useParams();
+  const location = useLocation();
   const allNews = [...weeklyNewReleases, ...festivalNews];
   const news = allNews.find(item => item.id === parseInt(id));
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id, location.pathname]);
 
   if (!news) {
     return (

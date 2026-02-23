@@ -15,6 +15,13 @@ import WeeklyNews from './pages/WeeklyNews';
 import NewsDetail from './pages/NewsDetail';
 import ConcertReviews from './pages/ConcertReviews';
 import ConcertReviewDetail from './pages/ConcertReviewDetail';
+import EditorProfile from './pages/EditorProfile';
+import AdminLayout from './admin/AdminLayout';
+import AdminLogin from './admin/pages/AdminLogin';
+import Dashboard from './admin/pages/Dashboard';
+import EditorManagement from './admin/pages/EditorManagement';
+import CarouselManagement from './admin/pages/CarouselManagement';
+import { ContentList, ContentForm } from './admin/pages/GenericManagement';
 import './App.css';
 
 function App() {
@@ -41,6 +48,20 @@ function App() {
           {/* 후기 */}
           <Route path="reviews/concert" element={<ConcertReviews />} />
           <Route path="reviews/concert/:id" element={<ConcertReviewDetail />} />
+          {/* 에디터 */}
+          <Route path="editor/:id" element={<EditorProfile />} />
+        </Route>
+
+        {/* 어드민 */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="editors" element={<EditorManagement />} />
+          <Route path="carousel" element={<CarouselManagement />} />
+          {/* 콘텐츠 관리 페이지들 */}
+          <Route path=":contentType" element={<ContentList />} />
+          <Route path=":contentType/new" element={<ContentForm />} />
+          <Route path=":contentType/:id" element={<ContentForm />} />
         </Route>
       </Routes>
     </Router>

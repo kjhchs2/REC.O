@@ -1,10 +1,16 @@
-import { useParams, Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { concertReviews } from '../data/mockData';
 import './ConcertReviewDetail.css';
 
 function ConcertReviewDetail() {
   const { id } = useParams();
+  const location = useLocation();
   const review = concertReviews.find(item => item.id === parseInt(id));
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id, location.pathname]);
 
   if (!review) {
     return (
