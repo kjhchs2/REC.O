@@ -60,7 +60,7 @@ function Home() {
       ...item,
       type: 'video_interview',
       link: '/interview/video',
-      image: item.thumbnail,
+      image: item.thumbnail || (item.youtubeId ? `https://img.youtube.com/vi/${item.youtubeId}/maxresdefault.jpg` : null),
       subtitle: item.artist,
       tag: '영상 인터뷰'
     })),
@@ -72,7 +72,7 @@ function Home() {
       subtitle: item.artist,
       tag: '서면 인터뷰'
     }))
-  ].slice(0, 5);
+  ].filter(item => item.image).slice(0, 5);
 
   const nextSlide = useCallback(() => {
     if (carouselItems.length > 0) {
@@ -261,7 +261,12 @@ function Home() {
           {videoInterviews.slice(0, 3).map((video) => (
             <Link to="/interview/video" key={video.id} className="video-card card">
               <div className="video-thumbnail">
-                <img src={video.thumbnail} alt={video.title} className="card-image" />
+                <img 
+                  src={video.thumbnail || `https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`} 
+                  alt={video.title} 
+                  className="card-image"
+                  onError={(e) => { e.target.style.display = 'none'; }}
+                />
                 <div className="play-button">
                   <svg viewBox="0 0 24 24" width="48" height="48">
                     <circle cx="12" cy="12" r="12" fill="rgba(0,0,0,0.7)" />
