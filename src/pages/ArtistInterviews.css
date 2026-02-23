@@ -95,6 +95,13 @@
   flex: 1;
 }
 
+.interview-editor {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
 .interview-artist {
   display: flex;
   align-items: center;

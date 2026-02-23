@@ -312,17 +312,25 @@ function GenericForm({ config, basePath }) {
       throw new Error('Supabase가 설정되지 않았습니다.');
     }
 
+    // DB에 없는 폼 전용 필드(_input, _raw 등) 제외
+    const validFieldNames = new Set(config.fields.map(f => f.name));
+    const payload = Object.fromEntries(
+      Object.entries(formData).filter(([key]) =>
+        validFieldNames.has(key) && !key.endsWith('_input') && !key.endsWith('_raw')
+      )
+    );
+
     if (isEdit) {
       const { error } = await supabase
         .from(config.table)
-        .update(formData)
+        .update(payload)
         .eq('id', id);
 
       if (error) throw error;
     } else {
       const { error } = await supabase
         .from(config.table)
-        .insert([formData]);
+        .insert([payload]);
 
       if (error) throw error;
     }

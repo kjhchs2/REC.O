@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { dataService } from '../lib/dataService';
 import './VideoInterviews.css';
 
@@ -84,8 +85,11 @@ function VideoInterviews() {
               <div className="video-meta">
                 <span className="video-artist">{video.artist}</span>
                 <span className="video-stats">
-                  <span className="views">{video.views.toLocaleString()} 조회</span>
+                  <span className="views">{(video.views ?? 0).toLocaleString()} 조회</span>
                   <span className="date">{video.date}</span>
+                  {video.editorDisplayName && (
+                    <span className="video-editor">작성: {video.editorDisplayName}</span>
+                  )}
                 </span>
               </div>
             </div>
@@ -116,9 +120,15 @@ function VideoInterviews() {
               <p className="modal-artist">{selectedVideo.artist}</p>
               <p className="modal-description">{selectedVideo.description}</p>
               <div className="modal-meta">
-                <span>{selectedVideo.views.toLocaleString()} 조회</span>
+                <span>{(selectedVideo.views ?? 0).toLocaleString()} 조회</span>
                 <span>•</span>
                 <span>{selectedVideo.date}</span>
+                {selectedVideo.editorDisplayName && (
+                  <>
+                    <span>•</span>
+                    <Link to={`/editor/${selectedVideo.editorId}`} className="modal-editor">작성: {selectedVideo.editorDisplayName}</Link>
+                  </>
+                )}
               </div>
             </div>
           </div>

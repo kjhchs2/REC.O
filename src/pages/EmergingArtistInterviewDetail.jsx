@@ -19,8 +19,12 @@ function EmergingArtistInterviewDetail() {
         setInterview(data);
         
         if (data?.editorId) {
-          const editorData = await dataService.getEditor(data.editorId);
-          setEditor(editorData);
+          if (data.editorDisplayName) {
+            setEditor({ id: data.editorId, displayName: data.editorDisplayName, profileImage: data.editorProfileImage, name: data.editorDisplayName });
+          } else {
+            const editorData = await dataService.getEditor(data.editorId);
+            setEditor(editorData);
+          }
         }
         
         const allInterviews = await dataService.getEmergingArtistInterviews();

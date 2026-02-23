@@ -64,6 +64,9 @@ function ArtistInterviews() {
                   <span className="artist-name">{interview.artist}</span>
                 </div>
               </div>
+              {interview.editorDisplayName && (
+                <span className="interview-editor">작성: {interview.editorDisplayName}</span>
+              )}
               <span className="read-more">인터뷰 읽기 →</span>
             </div>
             </Link>

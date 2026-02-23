@@ -122,8 +122,22 @@
 
 .video-stats {
   display: flex;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
   color: var(--text-muted);
+}
+
+.video-editor {
+  color: var(--text-muted);
+}
+
+.modal-editor {
+  color: var(--accent-primary);
+  text-decoration: none;
+}
+
+.modal-editor:hover {
+  text-decoration: underline;
 }
 
 /* Video Modal */

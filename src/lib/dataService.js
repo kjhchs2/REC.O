@@ -14,6 +14,8 @@ const transformFromSupabase = {
     views: item.views,
     description: item.description,
     editorId: item.editor_id,
+    editorDisplayName: item.editors?.display_name ?? item.editor?.display_name,
+    editorProfileImage: item.editors?.profile_image ?? item.editor?.profile_image,
   }),
   artistInterview: (item) => ({
     id: item.id,
@@ -26,6 +28,8 @@ const transformFromSupabase = {
     excerpt: item.excerpt,
     questions: item.questions,
     editorId: item.editor_id,
+    editorDisplayName: item.editors?.display_name ?? item.editor?.display_name,
+    editorProfileImage: item.editors?.profile_image ?? item.editor?.profile_image,
   }),
   emergingArtistInterview: (item) => ({
     id: item.id,
@@ -39,6 +43,8 @@ const transformFromSupabase = {
     excerpt: item.excerpt,
     questions: item.questions,
     editorId: item.editor_id,
+    editorDisplayName: item.editors?.display_name ?? item.editor?.display_name,
+    editorProfileImage: item.editors?.profile_image ?? item.editor?.profile_image,
   }),
   albumRecommendation: (item) => ({
     id: item.id,
@@ -130,7 +136,7 @@ export const dataService = {
     
     const { data, error } = await supabase
       .from('video_interviews')
-      .select('*')
+      .select('*, editors(display_name, profile_image)')
       .order('date', { ascending: false });
     
     if (error) throw error;
@@ -142,7 +148,7 @@ export const dataService = {
     
     const { data, error } = await supabase
       .from('video_interviews')
-      .select('*')
+      .select('*, editors(display_name, profile_image)')
       .eq('id', id)
       .single();
     
@@ -155,7 +161,7 @@ export const dataService = {
     
     const { data, error } = await supabase
       .from('artist_interviews')
-      .select('*')
+      .select('*, editors(display_name, profile_image)')
       .order('date', { ascending: false });
     
     if (error) throw error;
@@ -167,7 +173,7 @@ export const dataService = {
     
     const { data, error } = await supabase
       .from('artist_interviews')
-      .select('*')
+      .select('*, editors(display_name, profile_image)')
       .eq('id', id)
       .single();
     
@@ -180,7 +186,7 @@ export const dataService = {
     
     const { data, error } = await supabase
       .from('emerging_artist_interviews')
-      .select('*')
+      .select('*, editors(display_name, profile_image)')
       .order('date', { ascending: false });
     
     if (error) throw error;
@@ -192,7 +198,7 @@ export const dataService = {
     
     const { data, error } = await supabase
       .from('emerging_artist_interviews')
-      .select('*')
+      .select('*, editors(display_name, profile_image)')
       .eq('id', id)
       .single();
     

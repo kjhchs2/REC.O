@@ -76,6 +76,9 @@ function EmergingArtistInterviews() {
                   <span className="emerging-artist-label">신예 아티스트</span>
                 </div>
               </div>
+              {interview.editorDisplayName && (
+                <span className="emerging-editor">작성: {interview.editorDisplayName}</span>
+              )}
               <span className="emerging-cta">인터뷰 읽기 →</span>
             </div>
             </Link>
