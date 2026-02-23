@@ -1,8 +1,26 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { emergingArtistInterviews } from '../data/mockData';
+import { dataService } from '../lib/dataService';
 import './EmergingArtistInterviews.css';
 
 function EmergingArtistInterviews() {
+  const [emergingArtistInterviews, setEmergingArtistInterviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await dataService.getEmergingArtistInterviews();
+        setEmergingArtistInterviews(data);
+      } catch (error) {
+        console.error('Failed to fetch emerging artist interviews:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="emerging-interviews page-container">
       <header className="page-header">
@@ -24,6 +42,11 @@ function EmergingArtistInterviews() {
         </div>
       </div>
 
+      {loading ? (
+        <div style={{ textAlign: 'center', padding: '60px' }}>로딩 중...</div>
+      ) : emergingArtistInterviews.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '60px', color: '#888' }}>등록된 저점 매수 아티스트 인터뷰가 없습니다.</div>
+      ) : (
       <div className="emerging-list">
         {emergingArtistInterviews.map((interview) => (
           <Link 
@@ -55,9 +78,10 @@ function EmergingArtistInterviews() {
               </div>
               <span className="emerging-cta">인터뷰 읽기 →</span>
             </div>
-          </Link>
+            </Link>
         ))}
       </div>
+      )}
     </div>
   );
 }

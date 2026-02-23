@@ -1,11 +1,45 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { weeklyNewReleases, festivalNews } from '../data/mockData';
+import { dataService } from '../lib/dataService';
 import './WeeklyNews.css';
 
 function WeeklyNews() {
-  const allNews = [...weeklyNewReleases, ...festivalNews].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
-  );
+  const [allNews, setAllNews] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await dataService.getWeeklyNews();
+        setAllNews(data.sort((a, b) => new Date(b.date) - new Date(a.date)));
+      } catch (error) {
+        console.error('Failed to fetch weekly news:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="weekly-news page-container">
+        <div style={{ textAlign: 'center', padding: '60px' }}>로딩 중...</div>
+      </div>
+    );
+  }
+
+  if (allNews.length === 0) {
+    return (
+      <div className="weekly-news page-container">
+        <header className="page-header">
+          <h1 className="page-title">이주의 신곡 소식</h1>
+          <p className="page-subtitle">놓치면 안 될 이주의 음악 소식을 확인하세요</p>
+        </header>
+        <div style={{ textAlign: 'center', padding: '60px', color: '#888' }}>등록된 뉴스가 없습니다.</div>
+      </div>
+    );
+  }
 
   return (
     <div className="weekly-news page-container">

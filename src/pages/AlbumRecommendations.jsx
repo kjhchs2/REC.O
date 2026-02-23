@@ -1,8 +1,26 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { albumRecommendations } from '../data/mockData';
+import { dataService } from '../lib/dataService';
 import './AlbumRecommendations.css';
 
 function AlbumRecommendations() {
+  const [albumRecommendations, setAlbumRecommendations] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await dataService.getAlbumRecommendations();
+        setAlbumRecommendations(data);
+      } catch (error) {
+        console.error('Failed to fetch album recommendations:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="album-recommendations page-container">
       <header className="page-header">
@@ -12,6 +30,11 @@ function AlbumRecommendations() {
         </p>
       </header>
 
+      {loading ? (
+        <div style={{ textAlign: 'center', padding: '60px' }}>로딩 중...</div>
+      ) : albumRecommendations.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '60px', color: '#888' }}>등록된 추천 음반이 없습니다.</div>
+      ) : (
       <div className="album-grid">
         {albumRecommendations.map((album, index) => (
           <Link 
@@ -22,7 +45,7 @@ function AlbumRecommendations() {
             <div className="album-cover-wrapper">
               <img src={album.cover} alt={album.title} className="album-cover" />
               <div className="album-tags">
-                {album.tags.map((tag, tagIndex) => (
+                {(album.tags || []).map((tag, tagIndex) => (
                   <span key={tagIndex} className="album-tag">{tag}</span>
                 ))}
               </div>
@@ -41,6 +64,7 @@ function AlbumRecommendations() {
           </Link>
         ))}
       </div>
+      )}
     </div>
   );
 }

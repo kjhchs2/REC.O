@@ -1,8 +1,26 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { artistInterviews } from '../data/mockData';
+import { dataService } from '../lib/dataService';
 import './ArtistInterviews.css';
 
 function ArtistInterviews() {
+  const [artistInterviews, setArtistInterviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await dataService.getArtistInterviews();
+        setArtistInterviews(data);
+      } catch (error) {
+        console.error('Failed to fetch artist interviews:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="artist-interviews page-container">
       <header className="page-header">
@@ -12,6 +30,11 @@ function ArtistInterviews() {
         </p>
       </header>
 
+      {loading ? (
+        <div style={{ textAlign: 'center', padding: '60px' }}>로딩 중...</div>
+      ) : artistInterviews.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '60px', color: '#888' }}>등록된 아티스트 인터뷰가 없습니다.</div>
+      ) : (
       <div className="interview-list">
         {artistInterviews.map((interview, index) => (
           <Link 
@@ -43,9 +66,10 @@ function ArtistInterviews() {
               </div>
               <span className="read-more">인터뷰 읽기 →</span>
             </div>
-          </Link>
+            </Link>
         ))}
       </div>
+      )}
     </div>
   );
 }

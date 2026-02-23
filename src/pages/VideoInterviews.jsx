@@ -1,9 +1,25 @@
-import { useState } from 'react';
-import { videoInterviews } from '../data/mockData';
+import { useState, useEffect } from 'react';
+import { dataService } from '../lib/dataService';
 import './VideoInterviews.css';
 
 function VideoInterviews() {
+  const [videoInterviews, setVideoInterviews] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await dataService.getVideoInterviews();
+        setVideoInterviews(data);
+      } catch (error) {
+        console.error('Failed to fetch video interviews:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const openVideo = (video) => {
     setSelectedVideo(video);
@@ -22,6 +38,11 @@ function VideoInterviews() {
         </p>
       </header>
 
+      {loading ? (
+        <div style={{ textAlign: 'center', padding: '60px' }}>로딩 중...</div>
+      ) : videoInterviews.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '60px', color: '#888' }}>등록된 영상 인터뷰가 없습니다.</div>
+      ) : (
       <div className="video-grid">
         {videoInterviews.map((video) => (
           <article 
@@ -59,6 +80,7 @@ function VideoInterviews() {
           </article>
         ))}
       </div>
+      )}
 
       {/* Video Modal */}
       {selectedVideo && (

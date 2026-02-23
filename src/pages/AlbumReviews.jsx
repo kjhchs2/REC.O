@@ -1,8 +1,26 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { albumReviews } from '../data/mockData';
+import { dataService } from '../lib/dataService';
 import './AlbumReviews.css';
 
 function AlbumReviews() {
+  const [albumReviews, setAlbumReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await dataService.getAlbumReviews();
+        setAlbumReviews(data);
+      } catch (error) {
+        console.error('Failed to fetch album reviews:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="album-reviews page-container">
       <header className="page-header">
@@ -12,6 +30,11 @@ function AlbumReviews() {
         </p>
       </header>
 
+      {loading ? (
+        <div style={{ textAlign: 'center', padding: '60px' }}>로딩 중...</div>
+      ) : albumReviews.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '60px', color: '#888' }}>등록된 음반 리뷰가 없습니다.</div>
+      ) : (
       <div className="reviews-list">
         {albumReviews.map((review, index) => (
           <Link 
@@ -44,6 +67,7 @@ function AlbumReviews() {
           </Link>
         ))}
       </div>
+      )}
     </div>
   );
 }

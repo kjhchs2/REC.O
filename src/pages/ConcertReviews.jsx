@@ -1,8 +1,26 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { concertReviews } from '../data/mockData';
+import { dataService } from '../lib/dataService';
 import './ConcertReviews.css';
 
 function ConcertReviews() {
+  const [concertReviews, setConcertReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await dataService.getConcertReviews();
+        setConcertReviews(data);
+      } catch (error) {
+        console.error('Failed to fetch concert reviews:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="concert-reviews page-container">
       <header className="page-header">
@@ -12,6 +30,11 @@ function ConcertReviews() {
         </p>
       </header>
 
+      {loading ? (
+        <div style={{ textAlign: 'center', padding: '60px' }}>로딩 중...</div>
+      ) : concertReviews.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '60px', color: '#888' }}>등록된 공연 후기가 없습니다.</div>
+      ) : (
       <div className="concert-grid">
         {concertReviews.map((review, index) => (
           <Link 
@@ -51,6 +74,7 @@ function ConcertReviews() {
           </Link>
         ))}
       </div>
+      )}
     </div>
   );
 }
