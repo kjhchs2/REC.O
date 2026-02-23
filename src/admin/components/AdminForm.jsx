@@ -46,6 +46,28 @@ function AdminForm({
     }
   };
 
+  const extractYoutubeId = (input) => {
+    if (!input) return '';
+    const patterns = [
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+      /^([a-zA-Z0-9_-]{11})$/
+    ];
+    for (const pattern of patterns) {
+      const match = input.match(pattern);
+      if (match) return match[1];
+    }
+    return input;
+  };
+
+  const handleYoutubeChange = (name, value) => {
+    const youtubeId = extractYoutubeId(value.trim());
+    setFormData(prev => ({
+      ...prev,
+      [name]: youtubeId,
+      [`${name}_input`]: value
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -154,6 +176,25 @@ function AdminForm({
             />
             <span>{field.checkboxLabel || field.label}</span>
           </label>
+        );
+
+      case 'youtube':
+        return (
+          <div className="youtube-input-wrapper">
+            <input
+              type="text"
+              name={field.name}
+              value={formData[`${field.name}_input`] ?? value}
+              onChange={(e) => handleYoutubeChange(field.name, e.target.value)}
+              placeholder={field.placeholder}
+              required={field.required}
+            />
+            {value && (
+              <p className="youtube-preview">
+                추출된 ID: <code>{value}</code>
+              </p>
+            )}
+          </div>
         );
 
       default:

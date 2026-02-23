@@ -18,7 +18,7 @@ const contentConfigs = {
     fields: [
       { name: 'title', label: '제목', type: 'text', required: true },
       { name: 'artist', label: '아티스트', type: 'text', required: true },
-      { name: 'youtube_id', label: 'YouTube ID', type: 'text', placeholder: 'dQw4w9WgXcQ' },
+      { name: 'youtube_id', label: 'YouTube URL 또는 ID', type: 'youtube', placeholder: 'https://www.youtube.com/watch?v=... 또는 ID만 입력' },
       { name: 'thumbnail', label: '썸네일 URL', type: 'text' },
       { name: 'date', label: '날짜', type: 'date', required: true },
       { name: 'views', label: '조회수', type: 'number', defaultValue: 0 },

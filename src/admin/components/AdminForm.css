@@ -146,6 +146,26 @@
   border-top: 1px solid var(--border-color);
 }
 
+.youtube-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.youtube-preview {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.youtube-preview code {
+  background: var(--bg-tertiary);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  color: var(--accent-color);
+}
+
 /* Responsive */
 @media (max-width: 640px) {
   .admin-form {
