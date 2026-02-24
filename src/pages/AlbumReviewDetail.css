@@ -153,6 +153,8 @@
 }
 
 .review-body p {
+  white-space: pre-wrap;
+  word-break: break-word;
   margin-bottom: 1.5rem;
   text-indent: 1em;
 }

@@ -118,7 +118,7 @@ function VideoInterviews() {
             <div className="video-modal-info">
               <h2>{selectedVideo.title}</h2>
               <p className="modal-artist">{selectedVideo.artist}</p>
-              <p className="modal-description">{selectedVideo.description}</p>
+              <div className="modal-description">{selectedVideo.description}</div>
               <div className="modal-meta">
                 <span>{(selectedVideo.views ?? 0).toLocaleString()} 조회</span>
                 <span>•</span>

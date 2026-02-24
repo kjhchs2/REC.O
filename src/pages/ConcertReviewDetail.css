@@ -178,6 +178,8 @@
 
 .concert-body p {
   margin-bottom: 1.5rem;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .concert-body p:first-child {

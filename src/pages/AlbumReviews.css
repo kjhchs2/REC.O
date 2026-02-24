@@ -107,6 +107,8 @@
 }
 
 .review-excerpt {
+  white-space: pre-wrap;
+  word-break: break-word;
   color: var(--text-secondary);
   line-height: 1.8;
   margin-bottom: 1.5rem;

@@ -102,6 +102,8 @@
   font-size: 0.875rem;
   color: var(--text-secondary);
   margin-bottom: 1rem;
+  white-space: pre-wrap;
+  word-break: break-word;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -151,12 +153,14 @@
   background: rgba(0, 0, 0, 0.95);
   padding: 2rem;
   animation: fadeIn 0.3s ease;
+  overflow-y: auto;
 }
 
 .video-modal-content {
   width: 100%;
   max-width: 1000px;
   position: relative;
+  margin: auto;
 }
 
 .video-modal-close {
@@ -214,6 +218,8 @@
   color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: 1rem;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .modal-meta {

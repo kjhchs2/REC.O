@@ -120,6 +120,8 @@
   color: var(--text-secondary);
   line-height: 1.7;
   margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .album-sections {
@@ -191,6 +193,8 @@
   color: var(--text-secondary);
   line-height: 1.8;
   margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 /* Editor Card */

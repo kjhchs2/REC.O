@@ -114,6 +114,8 @@
   padding-bottom: 3rem;
   border-bottom: 1px solid var(--border-color);
   margin-bottom: 3rem;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 /* Q&A Section */
